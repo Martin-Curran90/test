@@ -1,0 +1,38 @@
+using System;
+using System.Data.SqlClient;
+
+class Program
+{
+    static void Main()
+    {
+        string connectionString = "Data Source=your_server;Initial Catalog=testDb;Integrated Security=True";
+
+        // SQL command to create the table
+        string createTableQuery = "CREATE TABLE testTable (" +
+                                  "Id INT PRIMARY KEY," +
+                                  "ColumnName1 VARCHAR(50)," +
+                                  "ColumnName2 INT" +
+                                  ");";
+
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(createTableQuery, connection))
+                {
+                    // Execute the SQL command to create the table
+                    command.ExecuteNonQuery();
+                    Console.WriteLine("Table 'testTable' created successfully.");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
+        }
+
+        Console.ReadLine();
+    }
+}
